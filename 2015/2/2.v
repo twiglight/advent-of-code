@@ -3,10 +3,10 @@ import math
 import arrays
 
 fn calc_ribbon(l u16, w u16, h u16) !u16 {
-	mut sizes := [l, w, h]
-	sizes.delete(arrays.idx_max(sizes)!)
+	area := arrays.sum([l, w, h].sorted()[..2].repeat(2))!
+	bow := (l * w * h)
 
-	return (arrays.sum(sizes)! * 2) + (l * w * h)
+	return area + bow
 }
 
 fn calc_area(x u16, y u16) u16 {
@@ -32,7 +32,10 @@ fn main() {
 		l, w, h := map_box(line)
 		la, wa, ha := calc_area(l, w), calc_area(w, h), calc_area(h, l)
 
+		// Part 1
 		smallest_side := math.min(la, math.min(wa, ha))
+
+		// Part 2
 		ribbon := calc_ribbon(l, w, h) or {
 			panic('Can\'t calc ribbon for line ${index}: ${line}')
 		}
