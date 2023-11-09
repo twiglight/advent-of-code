@@ -6,7 +6,7 @@ fn calc_ribbon(l u16, w u16, h u16) !u16 {
 	mut sizes := [l, w, h]
 	sizes.delete(arrays.idx_max(sizes)!)
 
-	return arrays.sum(sizes)! + arrays.sum(sizes)! + (l * w * h)
+	return (arrays.sum(sizes)! * 2) + (l * w * h)
 }
 
 fn calc_area(x u16, y u16) u16 {
