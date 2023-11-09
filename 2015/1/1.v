@@ -1,6 +1,5 @@
 import os
 
-// https://adventofcode.com/2015/day/1
 fn main() {
 	input_file := os.read_file('input') or {
 		println('Error: no input file found')
