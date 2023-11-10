@@ -4,7 +4,7 @@ import arrays
 struct Command {
 	action Type
 	start Point
-	end Point	
+	end Point
 }
 
 fn (s Command) act_on (light bool) bool {
@@ -40,19 +40,19 @@ fn parse_line(line string) Command {
 			Type.on,
 			create_point(words[2]),
 			create_point(words[4])
-		}	
+		}
 	} else if words[..2].join(' ') == 'turn off' {
 		return Command{
 			Type.off,
 			create_point(words[2]),
 			create_point(words[4])
-		}	
+		}
 	} else {
 		return Command{
 			Type.toggle,
 			create_point(words[1]),
 			create_point(words[3])
-		}	
+		}
 	}
 }
 
@@ -62,18 +62,29 @@ fn main() {
 	}
 
 	//input_file = ['turn off 301,3 through 808,453','turn on 351,678 through 951,908','toggle 720,196 through 897,994']
+	input_file = ['toggle 0,0 through 5,5', 'toggle 1,2 through 7,3']
 
-	mut lights := [][]bool{len: 999, cap: 999, init: []bool{len:999, cap:999}} 
+	mut lights := [][]bool{len: 10, cap: 10, init: []bool{len: 10, cap: 10}}
 
 	for line in input_file {
 		cmd := parse_line(line)
 
 		for x := cmd.start.x; x < cmd.end.x; x += 1 {
 			for y := cmd.start.y; y < cmd.end.y; y += 1 {
-				lights[x][y] = cmd.act_on(lights[x][y])	
+				lights[x][y] = cmd.act_on(lights[x][y])
 			}
 		}
-	}	
+
+		for x in lights {
+			for y in x {
+				print(if y {'X'} else {'O'})
+			}
+			println('')
+		}
+
+		println('')
+
+	}
 
 	result := arrays.fold(lights, 0, fn (accX int, elemX []bool) int {
 		return accX + arrays.fold(elemX, 0, fn (accY int, elemY bool) int {
@@ -81,7 +92,7 @@ fn main() {
 				return accY + 1
 			}
 			return accY
-		})  
+		})
 	})
 
 	println('${result} lights are turned on')
