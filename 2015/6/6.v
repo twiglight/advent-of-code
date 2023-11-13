@@ -7,11 +7,17 @@ struct Command {
 	end Point
 }
 
-fn (s Command) act_on (light bool) bool {
+fn (s Command) act_on (light u16) u16 {
 	match s.action {
-		.on {return true}
-		.off {return false}
-		.toggle {return !light}
+		.on {return light + 1}
+		.off {
+			if light > 0 {
+				return light - 1
+			} else {
+				return 0
+			}
+		}
+		.toggle {return light + 2}
 	}
 }
 
@@ -57,11 +63,11 @@ fn parse_line(line string) Command {
 }
 
 fn main() {
-	mut input_file := os.read_lines('input') or {
+	input_file := os.read_lines('input') or {
 		panic('Can\'t read input file')
 	}
 
-	mut lights := [][]bool{len: 1000, cap: 1000, init: []bool{len: 1000, cap: 1000}}
+	mut lights := [][]u16{len: 1000, cap: 1000, init: []u16{len: 1000, cap: 1000}}
 
 	for line in input_file {
 		cmd := parse_line(line)
@@ -74,14 +80,11 @@ fn main() {
 
 	}
 
-	result := arrays.fold(lights, 0, fn (accX int, elemX []bool) int {
-		return accX + arrays.fold(elemX, 0, fn (accY int, elemY bool) int {
-			if elemY {
-				return accY + 1
-			}
-			return accY
+	result := arrays.fold(lights, 0, fn (accX int, elemX []u16) int {
+		return accX + arrays.fold(elemX, 0, fn (accY int, elemY u16) int {
+			return accY + elemY
 		})
 	})
 
-	println('${result} lights are turned on')
+	println('${result} total brightness')
 }
