@@ -61,28 +61,16 @@ fn main() {
 		panic('Can\'t read input file')
 	}
 
-	//input_file = ['turn off 301,3 through 808,453','turn on 351,678 through 951,908','toggle 720,196 through 897,994']
-	input_file = ['toggle 0,0 through 5,5', 'toggle 1,2 through 7,3']
-
-	mut lights := [][]bool{len: 10, cap: 10, init: []bool{len: 10, cap: 10}}
+	mut lights := [][]bool{len: 1000, cap: 1000, init: []bool{len: 1000, cap: 1000}}
 
 	for line in input_file {
 		cmd := parse_line(line)
 
-		for x := cmd.start.x; x < cmd.end.x; x += 1 {
-			for y := cmd.start.y; y < cmd.end.y; y += 1 {
+		for x := cmd.start.x; x <= cmd.end.x; x += 1 {
+			for y := cmd.start.y; y <= cmd.end.y; y += 1 {
 				lights[x][y] = cmd.act_on(lights[x][y])
 			}
 		}
-
-		for x in lights {
-			for y in x {
-				print(if y {'X'} else {'O'})
-			}
-			println('')
-		}
-
-		println('')
 
 	}
 
