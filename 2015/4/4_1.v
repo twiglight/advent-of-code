@@ -10,8 +10,8 @@ fn main() {
 
 	for {
 		hash := md5.hexhash('${input_file}${secret}')
-		
-		if hash.starts_with('000000') {
+
+		if hash.starts_with('00000') {
 			println(secret)
 			break
 		} else {

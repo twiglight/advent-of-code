@@ -20,9 +20,7 @@ fn main() {
 			reached_basement = true
 
 			println('Santa first entered the basement at position: ${index + 1}')
+			return
 		}
 	}
-
-	// Part one
-	println('Santa arrives at floor: ${floor}')
 }

@@ -1,9 +1,8 @@
 import os
-import arrays
 
 fn is_naughty(line string) bool {
 	return line.contains_any_substr(['ab', 'cd', 'pq', 'xy'])
-} 
+}
 
 fn contains_three_vowels(line string) bool {
 	return line
