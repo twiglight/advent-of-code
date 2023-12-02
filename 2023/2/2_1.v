@@ -7,7 +7,7 @@ const green = 13
 const blue = 14
 
 fn cubes_no_larger_than(cubes string, max int) bool {
-	mut r := regex.regex_opt('\\d+') or { panic('Could not create regex!') }
+	mut r, _, _ := regex.regex_base('\\d+')
 	start, end := r.find(cubes)
 
 	return cubes[start..end].int() <= max
