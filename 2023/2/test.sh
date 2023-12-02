@@ -7,5 +7,5 @@
 
 @test "Test for Part 2 (vlang)" {
   result="$(v run 2_2.v)"
-  [[ "$result" =~ "" ]]
+  [[ "$result" =~ "49710" ]]
 }
