@@ -13,15 +13,12 @@ fn find_gear(lines []string, index int, start int, end int) ?Gear {
 		if y < 0 { continue }
 		if y >= lines.len { break }
 
-		for x := start-1; x < end+1; x+=1 {
-			if x < 0 { continue }
-			if x >= lines[index].len { continue }
+		x1 := if start - 1 < 0 {start} else {start - 1}
+		x2 := if end + 1 > lines[index].len {end} else {end + 1}
 
-			if lines[y][x] == `*` { 
-				return Gear{lines[index][start..end].int(), x, y}
-			}
+		if i := lines[y][x1..x2].index('*') {
+			return Gear{lines[index][start..end].int(), i + x1, y}
 		}
-	} 
 
 	return none
 }
