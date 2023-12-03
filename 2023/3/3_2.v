@@ -43,40 +43,13 @@ fn is_gear(lines []string, index int, start int, end int) ?Gear {
 	return none
 }
 
-fn is_part_number(lines []string, index int, start int, end int) bool {
-	for y := index-1; y <= index+1; y+=1 {
-		if y < 0 { continue }
-		if y >= lines.len { return false }
-
-		for x := start-1; x < end+1; x+=1 {
-			if x < 0 { continue }
-			if x >= lines[index].len { continue }
-
-			if lines[y][x] != `.` && !lines[y][x].is_digit() { return true }
-		}
-	} 
-
-	return false
-}
-
 fn main() {
 	input := os.read_lines('input') or { panic('Could not open input file!') }
 
-	mut r, _, _ := regex.regex_base('\\d+')
-	parsed_input := arrays.map_indexed(input, fn [mut r, input] (index int, line string) string {
-		return r.replace_by_fn(line, fn [input, index] (re regex.RE, in_txt string, start int, end int) string {
-
-			if is_part_number(input, index, start, end) {
-				return in_txt[start..end]
-			}
-
-			return in_txt[start..end].runes().map(fn (c rune) rune {return `.`}).string()
-		})
-	})
-	
 	mut gears := []Gear{}
+	mut r,_ ,_ := regex.regex_base('\\d+')
 
-	for index, line in parsed_input {
+	for index, line in input {
 		matches := r.find_all(line) 
 
 		for x := 0; x < matches.len; x+=2 {
