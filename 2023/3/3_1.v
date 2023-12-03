@@ -7,7 +7,6 @@ fn is_part_number(lines []string, subject string, index int, start int, end int)
 		if y < 0 { continue }
 		if y >= lines.len { return false }
 
-		println('y:${y}')
 		for x := start-1; x < end+1; x+=1 {
 			if x < 0 { continue }
 			if x >= lines[index].len { continue }
