@@ -2,7 +2,7 @@ import os
 import regex
 import arrays
 
-fn is_part_number(lines []string, subject string, index int, start int, end int) bool {
+fn is_part_number(lines []string, index int, start int, end int) bool {
 	for y := index-1; y <= index+1; y+=1 {
 		if y < 0 { continue }
 		if y >= lines.len { return false }
@@ -25,7 +25,7 @@ fn main() {
 	parsed_input := arrays.map_indexed(input, fn [mut r, input] (index int, line string) string {
 		return r.replace_by_fn(line, fn [input, index] (re regex.RE, in_txt string, start int, end int) string {
 
-			if is_part_number(input, in_txt[start..end], index, start, end) {
+			if is_part_number(input, index, start, end) {
 				return in_txt[start..end]
 			}
 
