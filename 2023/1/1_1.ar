@@ -1,10 +1,4 @@
 lines: split.words read relative "input"
 
-numbers: []
-
-loop lines 'line [
-	number: replace line {/[a-z]/} ""
-	'numbers ++ to :integer ~"|first number||last number|"
-]
-
-print ~"The calibration sum is: |sum numbers|"
+print sum map map lines 'line [ replace line {/[a-z]/} "" ]
+			'line [ to :integer ~"|first line||last line|"]
