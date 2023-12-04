@@ -1,8 +1,8 @@
 import os
 
 struct WinningCard {
-	card int
-	numbers []int
+	number int
+	won int
 }
 
 fn main() {
@@ -15,14 +15,12 @@ fn main() {
 
 		return WinningCard{line.split(':').first().split(' ').last().int(), numbers.filter(fn [winning_numbers] (number string) bool {
 			return number != '' && winning_numbers.any(it == number)
-		}).map(it.int())}
+		}).len}
 	})
 
-	for x := 0; x < cards.len; x+=1 {
-		if cards[x].numbers.len < 1 { continue }
-
-		for index, _ in cards[x].numbers {
-			cards << cards[cards[x].card+index]
+	for card in cards {
+		for index in 0 .. card.won {
+			cards << cards[card.number+index]
 		}
 	}
 
