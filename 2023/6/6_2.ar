@@ -1,0 +1,38 @@
+start: $[time,maxtime,dist][
+	if? (time * (maxtime - time)) > dist -> time
+	else -> 0 - 1
+]
+
+end: $[time,maxtime,dist][
+	if? (time * (maxtime - time)) > dist -> time
+	else -> 0 - 1
+]
+
+input: split.lines read relative "input" 
+
+time: input\0 | match {/\d+/}
+	      | join
+
+dist: input\1 | match {/\d+/}
+	      | join
+
+time: to :integer time
+dist: to :integer dist
+
+begin: 1
+first: start begin time dist
+
+while [first < 0] [
+	begin: begin + 1
+	first: start begin time dist
+] 
+
+finish: time - 1
+last: end finish - 1 time dist
+
+while [last < 0] [
+	finish: finish - 1
+	last: end finish time dist
+] 
+
+print "Amount of ways to beat: |(last - first) + 1|"
