@@ -1,9 +1,4 @@
-start: $[time,maxtime,dist][
-	if? (time * (maxtime - time)) > dist -> time
-	else -> 0 - 1
-]
-
-end: $[time,maxtime,dist][
+check: $[time,maxtime,dist][
 	if? (time * (maxtime - time)) > dist -> time
 	else -> 0 - 1
 ]
@@ -20,19 +15,17 @@ time: to :integer time
 dist: to :integer dist
 
 begin: 1
-first: start begin time dist
-
+first: check begin time dist
 while [first < 0] [
 	begin: begin + 1
-	first: start begin time dist
+	first: check begin time dist
 ] 
 
 finish: time - 1
-last: end finish - 1 time dist
-
+last: check finish - 1 time dist
 while [last < 0] [
 	finish: finish - 1
-	last: end finish time dist
+	last: check finish time dist
 ] 
 
-print "Amount of ways to beat: |(last - first) + 1|"
+print ~"Amount of ways to beat: |(last - first) + 1|"
